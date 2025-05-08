@@ -25,10 +25,11 @@ namespace MovieStore.Api
 	services.AddFluentValidationAutoValidation();
 	services.AddValidatorsFromAssemblyContaining<CreateGenreRequestValidator>();
 
-
 	services.AddAutoMapper(typeof(Startup));
-	services.AddScoped<IGenreService, GenreService>();
 
+	services.AddScoped<IGenreService, GenreService>();
+	services.AddScoped<IMovieService, MovieService>();
+	
 
 
         }
