@@ -33,6 +33,8 @@ namespace MovieStore.Api
 	services.AddScoped<IActorService, ActorService>();
 	services.AddScoped<ICustomerService, CustomerService>();
 	services.AddScoped<IOrderService, OrderService>();
+
+	services.AddSingleton<JwtTokenGenerator>();
 	
 
 
@@ -47,6 +49,21 @@ namespace MovieStore.Api
                 app.UseSwaggerUI();
             }
 
+	services.AddAuthentication("Bearer")
+    	.AddJwtBearer("Bearer", options =>
+    	{
+        var config = builder.Configuration;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["Jwt:Issuer"],
+            ValidAudience = config["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
+        };
+    });
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
