@@ -31,6 +31,7 @@ namespace MovieStore.Api
 	services.AddScoped<IMovieService, MovieService>();
 	services.AddScoped<IDirectorService, DirectorService>();
 	services.AddScoped<IActorService, ActorService>();
+	services.AddScoped<ICustomerService, CustomerService>();
 	
 
 
