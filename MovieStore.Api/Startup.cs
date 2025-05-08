@@ -32,6 +32,7 @@ namespace MovieStore.Api
 	services.AddScoped<IDirectorService, DirectorService>();
 	services.AddScoped<IActorService, ActorService>();
 	services.AddScoped<ICustomerService, CustomerService>();
+	services.AddScoped<IOrderService, OrderService>();
 	
 
 
@@ -55,6 +56,12 @@ namespace MovieStore.Api
             {
                 endpoints.MapControllers();
             });
+
+		using (var scope = app.ApplicationServices.CreateScope())
+    		{
+        		var context = scope.ServiceProvider.GetRequiredService<MovieStoreDbContext>();
+        		DbInitializer.SeedGenres(context);
+    		}
         }
     }
 }
